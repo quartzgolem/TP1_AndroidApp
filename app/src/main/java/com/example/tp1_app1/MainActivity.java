@@ -1,7 +1,9 @@
 package com.example.tp1_app1;
 
-import android.support.v7.app.AppCompatActivity;
+//import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import com.example.final_ig2i.R;
 
 public class MainActivity extends AppCompatActivity {
 
