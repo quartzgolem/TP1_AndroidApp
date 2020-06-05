@@ -55,7 +55,7 @@ public class ChoixConvActivity extends RestActivity implements View.OnClickListe
     @Override
     public void traiteReponse(JSONObject o, String action) {
         if (action.contentEquals("recupConversations")) {
-            gs.alerter(o.toString());
+            //gs.alerter(o.toString());
 
             // On transforme notre objet JSON en une liste de "Conversations"
             // On pourrait utiliser la librairie GSON pour automatiser ce processus d'interprétation
@@ -73,23 +73,8 @@ public class ChoixConvActivity extends RestActivity implements View.OnClickListe
              *                   {"id":"2","active":"1","theme":"Ballon d'Or"}]}
              * */
 
-//            int i;
-//            JSONArray convs = null;
             try {
-//                convs = o.getJSONArray("conversations");
-//                for(i=0;i<convs.length();i++) {
-//                    JSONObject nextConv = (JSONObject) convs.get(i);
-//
-//                    int id =Integer.parseInt(nextConv.getString("id"));
-//                    String theme = nextConv.getString("theme");
-//                    Boolean active = ((String) nextConv.getString("active")).contentEquals("1");
-//
-//                    gs.alerter("Conv " + id  + " theme = " + theme + " active ?" + active);
-//                    Conversation c = new Conversation(id,theme,active);
-//
-//                    listeConvs.addConversation(c);
-//
-//                }
+
                 String convsStr = o.getJSONArray("conversations").toString();
                 Gson gson = new Gson();
                 Type convsCollectionType = new TypeToken<Collection<Conversation>>(){}.getType();
@@ -100,7 +85,7 @@ public class ChoixConvActivity extends RestActivity implements View.OnClickListe
                 e.printStackTrace();
             }
 
-            gs.alerter(listeConvs.toString());
+            //gs.alerter(listeConvs.toString());
 
             // On peut maintenant appuyer sur le bouton
             btnOK.setEnabled(true);
@@ -186,7 +171,7 @@ public class ChoixConvActivity extends RestActivity implements View.OnClickListe
 
             ImageView icon = (ImageView) item.findViewById(R.id.spinner_icon);
 
-            if (nextC.getActive()) {
+            if (nextC.isActive()) {
                 icon.setImageResource(R.drawable.icon36);
             } else {
                 icon.setImageResource(R.drawable.icongray36);
@@ -207,7 +192,7 @@ public class ChoixConvActivity extends RestActivity implements View.OnClickListe
 
             ImageView icon = (ImageView) item.findViewById(R.id.spinner_icon);
 
-            if (nextC.getActive()) {
+            if (nextC.isActive()) {
                 icon.setImageResource(R.drawable.icon);
             } else {
                 icon.setImageResource(R.drawable.icongray);
