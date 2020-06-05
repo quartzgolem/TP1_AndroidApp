@@ -20,4 +20,9 @@ public class Message {
     public String getCouleur() {
         return couleur;
     }
+
+    @Override
+    public String toString() {
+        return "[" + auteur + "] " + contenu;
+    }
 }
