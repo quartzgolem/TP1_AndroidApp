@@ -2,6 +2,7 @@ package com.example.final_ig2i;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -11,6 +12,14 @@ import android.widget.TextView;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 
 public class ShowConvActivity extends RestActivity implements View.OnClickListener {
 
@@ -45,20 +54,17 @@ public class ShowConvActivity extends RestActivity implements View.OnClickListen
             try {
 
                 // parcours des messages
-                JSONArray messages = o.getJSONArray("messages");
-                int i;
-                for(i=0;i<messages.length();i++) {
-                    JSONObject msg = (JSONObject) messages.get(i);
-                    String contenu =  msg.getString("contenu");
-                    String auteur =  msg.getString("auteur");
-                    String couleur =  msg.getString("couleur");
+                String messagesStr = o.getJSONArray("messages").toString();
+                Gson gson = new Gson();
+                Type messageCollectionType = new TypeToken<Collection<Message>>(){}.getType();
+                ArrayList<Message> messageList = gson.fromJson(messagesStr, messageCollectionType);
 
+                for(Message m : messageList) {
                     TextView tv = new TextView(this);
-                    tv.setText("[" + auteur + "] " + contenu);
-                    tv.setTextColor(Color.parseColor(couleur));
-
+                    String str = "[" + m.getAuteur() + "] " + m.getContenu();
+                    tv.setText(str);
+                    tv.setTextColor(Color.parseColor(m.getCouleur()));
                     msgLayout.addView(tv);
-
                 }
 
                 // mise à jour du numéro du dernier message
