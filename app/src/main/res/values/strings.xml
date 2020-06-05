@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">L4SI_chat_2014</string>
+    <string name="app_name">CHAT</string>
     <string name="action_settings">Préférences</string>
     <string name="action_account">Mon Compte</string>
     <string name="titre">L4SI-Chat !</string>
-    <string name="login">Login : </string>
-    <string name="passe">Mot de passe : </string>
+    <string name="login">Login</string>
+    <string name="passe">Mot de passe</string>
+    <string name="connection">Se connecter</string>
     <string name="ok">OK</string>
     <string name="monCompte">Mon Compte</string>
     <string name="couleur">Couleur Préférée : </string>

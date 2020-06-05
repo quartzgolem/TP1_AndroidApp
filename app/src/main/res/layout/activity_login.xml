@@ -3,103 +3,104 @@
     android:id="@+id/LinearLayout1"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/orange"
-    android:gravity="center_horizontal|right"
+    android:background="@color/blanc"
+    android:gravity="center_horizontal|center_vertical|end"
     android:orientation="vertical"
-    >
+    android:padding="32dp">
 
     <TextView
         android:id="@+id/login_titre"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="32dp"
         android:gravity="center_horizontal"
         android:text="@string/titre"
-        android:textColor="@color/blanc"
-        android:textSize="20pt" />
+        android:textColor="@color/colorPrimary"
+        android:textSize="20pt"
+        android:textStyle="bold" />
 
-    <LinearLayout
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content"
+        android:layout_margin="4dp">
 
-        <TextView
-            android:id="@+id/login_labelLogin"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/login"
-            android:textColor="@color/blanc" />
-
-        <EditText
+        <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/login_edtLogin"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@color/blanc"
-            android:ems="10" >
+            android:hint="@string/login"
+            android:inputType="text"
+            android:maxLines="1">
 
             <requestFocus />
-        </EditText>
+        </com.google.android.material.textfield.TextInputEditText>
 
-    </LinearLayout>
+    </com.google.android.material.textfield.TextInputLayout>
 
-    <LinearLayout
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content"
+        android:layout_margin="4dp">
 
-        <TextView
-            android:id="@+id/login_labelPasse"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/passe"
-            android:textColor="@color/blanc" />
-
-        <EditText
+        <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/login_edtPasse"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@color/blanc"
-            android:ems="10"
-            android:inputType="textPassword" />
+            android:hint="@string/passe"
+            android:inputType="textPassword"
+            android:maxLines="1" />
 
-    </LinearLayout>
+    </com.google.android.material.textfield.TextInputLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content"
+        android:layout_margin="4dp">
 
         <TextView
             android:id="@+id/login_labelRemember"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/remember"
-            android:textColor="@color/blanc" />
+            android:textColor="@color/noir" />
 
         <CheckBox
             android:id="@+id/login_cbRemember"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            />
+            android:buttonTint="@color/noir" />
 
     </LinearLayout>
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/login_btnOK"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:enabled="false"
-        android:text="@string/ok" />
+        android:layout_width="match_parent"
+        android:layout_height="36dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="24dp"
+        android:background="@color/colorSecondary"
+        android:maxWidth="150dp"
+        android:minWidth="64dp"
+        android:paddingHorizontal="16dp"
+        android:textAppearance="@style/Widget.MaterialComponents.Button"
+        android:text="@string/connection"
+        android:textColor="@color/secondaryTextColor"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/login_progressText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="" />
+        android:text=""
+        android:gravity="bottom"/>
 
     <ProgressBar
         android:id="@+id/login_progressBar"
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="invisible" />
+        android:visibility="invisible"
+        android:gravity="bottom"/>
 
 </LinearLayout>
