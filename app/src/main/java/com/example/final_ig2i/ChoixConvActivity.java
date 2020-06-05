@@ -12,11 +12,16 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Collection;
 
 public class ChoixConvActivity extends RestActivity implements View.OnClickListener {
 
@@ -68,22 +73,29 @@ public class ChoixConvActivity extends RestActivity implements View.OnClickListe
              *                   {"id":"2","active":"1","theme":"Ballon d'Or"}]}
              * */
 
-            int i;
-            JSONArray convs = null;
+//            int i;
+//            JSONArray convs = null;
             try {
-                convs = o.getJSONArray("conversations");
-                for(i=0;i<convs.length();i++) {
-                    JSONObject nextConv = (JSONObject) convs.get(i);
-
-                    int id =Integer.parseInt(nextConv.getString("id"));
-                    String theme = nextConv.getString("theme");
-                    Boolean active = ((String) nextConv.getString("active")).contentEquals("1");
-
-                    gs.alerter("Conv " + id  + " theme = " + theme + " active ?" + active);
-                    Conversation c = new Conversation(id,theme,active);
-
-                    listeConvs.addConversation(c);
-                }
+//                convs = o.getJSONArray("conversations");
+//                for(i=0;i<convs.length();i++) {
+//                    JSONObject nextConv = (JSONObject) convs.get(i);
+//
+//                    int id =Integer.parseInt(nextConv.getString("id"));
+//                    String theme = nextConv.getString("theme");
+//                    Boolean active = ((String) nextConv.getString("active")).contentEquals("1");
+//
+//                    gs.alerter("Conv " + id  + " theme = " + theme + " active ?" + active);
+//                    Conversation c = new Conversation(id,theme,active);
+//
+//                    listeConvs.addConversation(c);
+//
+//                }
+                String convsStr = o.getJSONArray("conversations").toString();
+                Gson gson = new Gson();
+                Type convsCollectionType = new TypeToken<Collection<Conversation>>(){}.getType();
+                ArrayList<Conversation> conversations = gson.fromJson(convsStr, convsCollectionType);
+                listeConvs.setList(conversations);
+                
             } catch (JSONException e) {
                 e.printStackTrace();
             }
