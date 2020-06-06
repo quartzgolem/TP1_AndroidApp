@@ -3,16 +3,20 @@
     <color name="colorPrimary">#2979ff</color>
     <color name="colorPrimaryLight">#75a7ff</color>
     <color name="colorPrimaryDark">#004ecb</color>
+
     <color name="colorSecondary">#bdbdbd</color>
     <color name="colorSecondaryLight">#efefef</color>
     <color name="colorSecondaryDark">#8d8d8d</color>
+
     <color name="primaryTextColor">#ffffff</color>
-    <color name="secondaryTextColor">#000000</color>
+    <color name="secondaryTextColor">#002</color>
+
     <color name="colorAccent">#ffa726</color>
+    <color name="white">#ffffff</color>
+    <color name="black">#000000</color>
 
     <color name="orange">#800000</color>
     <color name="blanc">#ffffff</color>
     <color name="noir">#000000</color>
-    <color name="gris">#eee</color>
 </resources>
 

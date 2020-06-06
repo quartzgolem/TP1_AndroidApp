@@ -64,8 +64,8 @@ public class GlobalState extends Application {
         {
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
             //String urlData = prefs.getString("urlData","http://10.0.2.2/data.php");
-            //String urlData = prefs.getString("urlData","http://tomnab.fr/chat/data.php");
-            String urlData = prefs.getString("urlData","http://192.168.1.14/data.php"); // ATTENTION AU FIREWALL
+            String urlData = prefs.getString("urlData","http://tomnab.fr/chat/data.php");
+            //String urlData = prefs.getString("urlData","http://192.168.1.14/data.php"); // ATTENTION AU FIREWALL
 
             try {
                 URL url = new URL(urlData + "?" + qs);

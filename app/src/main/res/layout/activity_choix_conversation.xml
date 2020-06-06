@@ -3,18 +3,22 @@
     android:id="@+id/LinearLayout1"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/orange"
-    android:gravity="center_horizontal|right"
-    android:orientation="vertical">
+    android:background="@color/white"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:padding="32dp">
 
     <TextView
         android:id="@+id/choixConversation_titre"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="32dp"
         android:gravity="center_horizontal"
         android:text="@string/choixConversation"
-        android:textColor="@color/blanc"
-        android:textSize="12pt" />
+        android:textColor="@color/colorSecondaryDark"
+        android:textSize="15pt"
+        android:textStyle="bold"/>
 
     <Spinner
         android:id="@+id/choixConversation_choixConv"
@@ -24,9 +28,13 @@
 
     <Button
         android:id="@+id/choixConversation_btnOK"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:enabled="false"
-        android:text="@string/ok" />
+        android:layout_marginVertical="24dp"
+        android:layout_marginHorizontal="16dp"
+        android:backgroundTint="@color/colorAccent"
+        android:text="@string/ok"
+        android:textColor="@color/primaryTextColor"
+        android:textStyle="bold" />
 
 </LinearLayout>

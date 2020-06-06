@@ -3,63 +3,57 @@
     android:id="@+id/LinearLayout1"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/orange"
-    android:gravity="center_horizontal|right"
-    android:orientation="vertical">
+    android:background="@color/white"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:padding="32dp">
 
     <TextView
         android:id="@+id/compte_titre"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="32dp"
         android:gravity="center_horizontal"
         android:text="@string/monCompte"
-        android:textColor="@color/blanc"
-        android:textSize="20pt" />
+        android:textColor="@color/colorPrimary"
+        android:textSize="20pt"
+        android:textStyle="bold" />
 
-    <LinearLayout
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content"
+        android:layout_margin="4dp">
 
-        <TextView
-            android:id="@+id/compte_labelLogin"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/login"
-            android:textColor="@color/blanc" />
-
-        <EditText
+        <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/compte_edtLogin"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@color/blanc"
-            android:ems="10" >
+            android:hint="@string/login"
+            android:backgroundTint="@color/white"
+            android:inputType="text"
+            android:maxLines="1">
 
             <requestFocus />
-        </EditText>
+        </com.google.android.material.textfield.TextInputEditText>
 
-    </LinearLayout>
+    </com.google.android.material.textfield.TextInputLayout>
 
-    <LinearLayout
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content"
+        android:layout_margin="4dp">
 
-        <TextView
-            android:id="@+id/compte_labelPasse"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/passe"
-            android:textColor="@color/blanc" />
-
-        <EditText
+        <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/compte_edtPasse"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@color/blanc"
-            android:ems="10" />
+            android:hint="@string/passe"
+            android:backgroundTint="@color/white"
+            android:inputType="text"
+            android:maxLines="1" />
 
-    </LinearLayout>
+    </com.google.android.material.textfield.TextInputLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -70,7 +64,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/couleur"
-            android:textColor="@color/blanc" />
+            android:textColor="@color/secondaryTextColor" />
 
         <Spinner
             android:id="@+id/compte_listeAvatars"

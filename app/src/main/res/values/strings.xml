@@ -5,7 +5,7 @@
     <string name="action_settings">Préférences</string>
     <string name="action_account">Mon Compte</string>
     <string name="titre">L4SI-Chat !</string>
-    <string name="login">Login</string>
+    <string name="login">Pseudo</string>
     <string name="passe">Mot de passe</string>
     <string name="connection">Se connecter</string>
     <string name="ok">OK</string>
