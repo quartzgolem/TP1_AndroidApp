@@ -11,7 +11,7 @@
     <string name="ok">OK</string>
     <string name="monCompte">Mon Compte</string>
     <string name="couleur">Couleur Préférée : </string>
-    <string name="choixConversation">Choix Conversation</string>
+    <string name="choixConversation">Conversations</string>
     <string name="conversation">Conversation</string>
     <string name="preferences">Préférences</string>
     <string name="remember">Se souvenir de moi : </string>

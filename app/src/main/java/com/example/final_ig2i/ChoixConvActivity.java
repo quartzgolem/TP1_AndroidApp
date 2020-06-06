@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -18,11 +19,10 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class ChoixConvActivity extends RestActivity implements View.OnClickListener {
+public class ChoixConvActivity extends RestActivity {
 
     private ListeConversations listeConvs;
-    private Button btnOK;
-    private Spinner sp;
+    private ListView lv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,10 +39,7 @@ public class ChoixConvActivity extends RestActivity implements View.OnClickListe
 
         listeConvs = new ListeConversations();
 
-        btnOK = findViewById(R.id.choixConversation_btnOK);
-        btnOK.setOnClickListener(this);
-
-        sp = (Spinner) findViewById(R.id.choixConversation_choixConv);
+        lv = (ListView) findViewById(R.id.choixConversation_choixConv);
 
     }
 
@@ -91,110 +88,68 @@ public class ChoixConvActivity extends RestActivity implements View.OnClickListe
             gs.alerter(listeConvs.toString());
 
             // On peut maintenant appuyer sur le bouton
-            btnOK.setEnabled(true);
-            remplirSpinner2();
+            remplirSpinner();
         }
     }
 
     private void remplirSpinner() {
-
-        // V1 : utilisation d'un spinner
-        // https://www.mkyong.com/android/android-spinner-drop-down-list-example/
-
-        // On ne doit déclencher cette méthode que lorsque la liste des conversations
-        // est complète
-
-        // V1 : Adaptateur simple (on affiche juste les noms des conversations)
-        // Cet adaptateur utilise la méthode toString() des conversations
-        // Pour choisir le contenu à afficher dans les items du menu
-
-        ArrayAdapter<Conversation> dataAdapter =
-                new ArrayAdapter<Conversation>(this,
-                android.R.layout.simple_spinner_item, listeConvs.getList());
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        sp.setAdapter(dataAdapter);
-
-    }
-
-
-    private void remplirSpinner2() {
         // V2 : Utilisation d'un adapteur customisé qui permet de définir nous-même
         // la forme des éléments à afficher
 
-        sp.setAdapter(new MyCustomAdapter(this,
-                                            R.layout.spinner_item,
-                                            listeConvs.getList()));
-
+        lv.setAdapter(new MyCustomAdapter(
+            this,
+            R.layout.spinner_item,
+            listeConvs.getList()
+        ));
     }
 
-    @Override
-    public void onClick(View v) {
-        // lors du clic sur le bouton OK,
-        // récupérer l'id de la conversation sélectionnée
-        // démarrer l'activité d'affichage des messages
 
-        // NB : il faudrait être sur qu'on ne clique pas sur le bouton
-        // tant qu'on a pas fini de charger la liste des conversations
-        // On indique que le bouton est désactivé au départ.
-
-        Conversation convSelected = (Conversation) sp.getSelectedItem();
-        gs.alerter("Conv sélectionnée : " + convSelected.getTheme()
-                        + " id=" + convSelected.getId());
-
-        // On crée un Intent pour changer d'activité
-        Intent toShowConv = new Intent(this,ShowConvActivity.class);
-        Bundle bdl = new Bundle();
-        bdl.putInt("idConversation",convSelected.getId());
-        toShowConv.putExtras(bdl);
-        startActivity(toShowConv);
-    }
 
     public class MyCustomAdapter extends ArrayAdapter<Conversation> {
 
         private int layoutId;
         private ArrayList<Conversation> dataConvs;
+        private ChoixConvActivity activity;
 
-        public MyCustomAdapter(Context context,
-                               int itemLayoutId,
-                               ArrayList<Conversation> objects) {
+        public MyCustomAdapter(ChoixConvActivity context, int itemLayoutId, ArrayList<Conversation> objects) {
             super(context, itemLayoutId, objects);
+            activity = context;
             layoutId = itemLayoutId;
             dataConvs = objects;
         }
 
         @Override
-        public View getDropDownView(int position, View convertView, ViewGroup parent) {
-            //return getCustomView(position, convertView, parent);
-            LayoutInflater inflater = getLayoutInflater();
-            View item = inflater.inflate(layoutId, parent, false);
-            Conversation nextC = dataConvs.get(position);
-
-            TextView label = (TextView) item.findViewById(R.id.spinner_theme);
-            label.setText(nextC.getTheme());
-
-            ImageView icon = (ImageView) item.findViewById(R.id.spinner_icon);
-
-            if (nextC.getActive()) {
-                icon.setImageResource(R.drawable.icon36);
-            } else {
-                icon.setImageResource(R.drawable.icongray36);
-            }
-
-            return item;
-        }
-
-        @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            //return getCustomView(position, convertView, parent);
             LayoutInflater inflater = getLayoutInflater();
             View item = inflater.inflate(layoutId, parent, false);
-            Conversation nextC = dataConvs.get(position);
+            final Conversation nextC = dataConvs.get(position);
+
+            item.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // lors du clic sur le bouton OK,
+                    // récupérer l'id de la conversation sélectionnée
+                    // démarrer l'activité d'affichage des messages
+
+                    // NB : il faudrait être sur qu'on ne clique pas sur le bouton
+                    // tant qu'on a pas fini de charger la liste des conversations
+                    // On indique que le bouton est désactivé au départ.
+
+                    gs.alerter("Conv sélectionnée : " + nextC.getTheme());
+
+                    // On crée un Intent pour changer d'activité
+                    Intent toShowConv = new Intent(activity,ShowConvActivity.class);
+                    Bundle bdl = new Bundle();
+                    bdl.putInt("idConversation",nextC.getId());
+                    toShowConv.putExtras(bdl);
+                    startActivity(toShowConv);
+                }
+            });
 
             TextView label = (TextView) item.findViewById(R.id.spinner_theme);
             label.setText(nextC.getTheme());
 
             ImageView icon = (ImageView) item.findViewById(R.id.spinner_icon);
-
             if (nextC.getActive()) {
                 icon.setImageResource(R.drawable.icon);
             } else {
