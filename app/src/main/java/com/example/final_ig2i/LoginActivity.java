@@ -60,7 +60,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             Log.i("L4-SI-Logs","onPostExecute");
             if (result != null ) {
                 Log.i("L4-SI-Logs", result.toString());
-                LoginActivity.this.gs.alerter(result.toString());
 
                 // TODO: Vérifier la connexion ("connecte":true)
                 try {

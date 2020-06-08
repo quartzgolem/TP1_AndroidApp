@@ -38,11 +38,10 @@ public class ShowConvActivity extends RestActivity implements View.OnClickListen
     @Override
     public void traiteReponse(JSONObject o, String action) {
         if (action.contentEquals("posterMessage")) {
-            gs.alerter("retour de la requete posterMessage");
+            //gs.alerter("retour de la requete posterMessage");
         }
         if (action.contentEquals("chargement_messages")) {
             // On a reçu des messages
-            // gs.alerter(o.toString());
            /* {"connecte":true,
             "action":"getMessages",
             "feedback":"entrez action: logout, setPasse(passe),setPseudo(pseudo),
@@ -165,8 +164,6 @@ public class ShowConvActivity extends RestActivity implements View.OnClickListen
         username = bdl.getString("username");
         String theme = bdl.getString("themeConversation");
 
-        gs.alerter(Integer.toString(idConv));
-
         // On récupère la liste des messages périodiquement
         // action=getMessages&idConv=<ID>
 
@@ -174,7 +171,6 @@ public class ShowConvActivity extends RestActivity implements View.OnClickListen
         // qui permet d'indiquer le dernier message dont on dispose
         // action=getMessages&idConv=<ID>&idLastMessage=<NUMERO>
 
-        gs.alerter("qsgsfg");
         requetePeriodique(10, "chargement_messages");
         msgLayout = findViewById(R.id.conversation_LayoutMessages);
         msgScroll = findViewById(R.id.conversation_svMessages);

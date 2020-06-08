@@ -130,7 +130,7 @@ public class ChoixConvActivity extends RestActivity {
                     // tant qu'on a pas fini de charger la liste des conversations
                     // On indique que le bouton est désactivé au départ.
 
-                    gs.alerter("Conv sélectionnée : " + nextC.getTheme());
+                    //gs.alerter("Conv sélectionnée : " + nextC.getTheme());
 
                     // On crée un Intent pour changer d'activité
                     Intent toShowConv = new Intent(activity,ShowConvActivity.class);
