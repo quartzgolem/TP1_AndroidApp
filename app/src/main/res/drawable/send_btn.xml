@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:width="30dp"
+        android:height="30dp"
+        android:gravity="center">
+        <shape
+            android:shape="oval"
+            android:tint="@color/colorAccent"/>
+    </item>
+    <item
+        android:gravity="center"
+        android:left="5dp"
+        android:width="20dp"
+        android:height="20dp">
+        <bitmap
+            android:src="@drawable/send"
+            android:tint="@color/white"/>
+    </item>
+</layer-list>

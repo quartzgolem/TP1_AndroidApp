@@ -1,16 +1,13 @@
 package com.example.final_ig2i;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import org.json.JSONArray;
@@ -23,11 +20,15 @@ public class ChoixConvActivity extends RestActivity {
 
     private ListeConversations listeConvs;
     private ListView lv;
+    private String username;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choix_conversation);
+
+        Bundle bdl = getIntent().getExtras();
+        username = bdl.getString("username");
 
         // Au démarrage de l'activité, réaliser une requete
         // Pour récupérer les conversations
@@ -39,8 +40,7 @@ public class ChoixConvActivity extends RestActivity {
 
         listeConvs = new ListeConversations();
 
-        lv = (ListView) findViewById(R.id.choixConversation_choixConv);
-
+        lv = findViewById(R.id.choixConversation_choixConv);
     }
 
 
@@ -66,7 +66,7 @@ public class ChoixConvActivity extends RestActivity {
              * */
 
             int i;
-            JSONArray convs = null;
+            JSONArray convs;
             try {
                 convs = o.getJSONArray("conversations");
                 for(i=0;i<convs.length();i++) {
@@ -74,7 +74,7 @@ public class ChoixConvActivity extends RestActivity {
 
                     int id =Integer.parseInt(nextConv.getString("id"));
                     String theme = nextConv.getString("theme");
-                    Boolean active = ((String) nextConv.getString("active")).contentEquals("1");
+                    Boolean active = nextConv.getString("active").contentEquals("1");
 
                     gs.alerter("Conv " + id  + " theme = " + theme + " active ?" + active);
                     Conversation c = new Conversation(id,theme,active);
@@ -111,7 +111,7 @@ public class ChoixConvActivity extends RestActivity {
         private ArrayList<Conversation> dataConvs;
         private ChoixConvActivity activity;
 
-        public MyCustomAdapter(ChoixConvActivity context, int itemLayoutId, ArrayList<Conversation> objects) {
+        MyCustomAdapter(ChoixConvActivity context, int itemLayoutId, ArrayList<Conversation> objects) {
             super(context, itemLayoutId, objects);
             activity = context;
             layoutId = itemLayoutId;
@@ -141,15 +141,17 @@ public class ChoixConvActivity extends RestActivity {
                     Intent toShowConv = new Intent(activity,ShowConvActivity.class);
                     Bundle bdl = new Bundle();
                     bdl.putInt("idConversation",nextC.getId());
+                    bdl.putString("themeConversation",nextC.getTheme());
+                    bdl.putString("username",username);
                     toShowConv.putExtras(bdl);
                     startActivity(toShowConv);
                 }
             });
 
-            TextView label = (TextView) item.findViewById(R.id.spinner_theme);
+            TextView label = item.findViewById(R.id.spinner_theme);
             label.setText(nextC.getTheme());
 
-            ImageView icon = (ImageView) item.findViewById(R.id.spinner_icon);
+            ImageView icon = item.findViewById(R.id.spinner_icon);
             if (nextC.getActive()) {
                 icon.setImageResource(R.drawable.icon);
             } else {
