@@ -84,17 +84,6 @@ public class ShowConvActivity extends RestActivity implements View.OnClickListen
                     GradientDrawable back = new GradientDrawable();
                     back.setStroke(6,Color.parseColor(msg.getCouleur()));
 
-                    if(msg.getAuteur().equals(prevAuteur) && msg.getAuteur().equals(nextAuteur)) {
-                        item.setPadding(0, 0, 0, 5);
-                       back.setCornerRadii(new float[]{200,200,40,40,40,40,200,200});
-                    } else if (msg.getAuteur().equals(nextAuteur)) {
-                        item.setPadding(0, 0, 0, 5);
-                       back.setCornerRadii(new float[]{200,200,200,200,40,40,200,200});
-                    } else if (msg.getAuteur().equals(prevAuteur))
-                       back.setCornerRadii(new float[]{200,200,40,40,200,200,200,200});
-                    else back.setCornerRadius(200);
-
-
                     TextView author = item.findViewById(R.id.message_author);
                     View pad;
                     RelativeLayout layout = item.findViewById(R.id.message_layout);
@@ -106,10 +95,34 @@ public class ShowConvActivity extends RestActivity implements View.OnClickListen
                         content.setTextColor(getResources().getColor(R.color.white));
                         layout.setGravity(Gravity.END);
 
+                        if(msg.getAuteur().equals(prevAuteur) && msg.getAuteur().equals(nextAuteur)) {
+                            item.setPadding(0, 0, 0, 5);
+                            back.setCornerRadii(new float[]{100,100,40,40,40,40,100,100});
+                        } else if (msg.getAuteur().equals(nextAuteur)) {
+                            item.setPadding(0, 0, 0, 5);
+                            back.setCornerRadii(new float[]{100,100,100,100,40,40,100,100});
+                        } else if (msg.getAuteur().equals(prevAuteur))
+                            back.setCornerRadii(new float[]{100,100,40,40,100,100,100,100});
+                        else back.setCornerRadius(100);
+
                         pad = item.findViewById(R.id.message_rPadding);
                     } else {
                         author.setText(msg.getAuteur());
                         author.setTextColor(Color.parseColor(msg.getCouleur()));
+
+                        if(msg.getAuteur().equals(prevAuteur) && msg.getAuteur().equals(nextAuteur)) {
+                            ((ViewGroup) author.getParent()).removeView(author);
+                            item.setPadding(0, 0, 0, 5);
+                            back.setCornerRadii(new float[]{40,40,100,100,100,100,40,40});
+                        } else if (msg.getAuteur().equals(nextAuteur)) {
+                            item.setPadding(0, 0, 0, 5);
+                            back.setCornerRadii(new float[]{100,100,100,100,100,100,40,40,});
+                        } else if (msg.getAuteur().equals(prevAuteur)) {
+                            ((ViewGroup) author.getParent()).removeView(author);
+                            back.setCornerRadii(new float[]{40, 40, 100, 100, 100, 100, 100, 100});
+                        }
+                        else back.setCornerRadius(100);
+
                         pad = item.findViewById(R.id.message_lPadding);
                     }
 
