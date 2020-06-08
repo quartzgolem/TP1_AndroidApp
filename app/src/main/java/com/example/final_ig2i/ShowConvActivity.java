@@ -14,7 +14,6 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -23,7 +22,6 @@ import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 
 public class ShowConvActivity extends RestActivity implements View.OnClickListener {
@@ -72,27 +70,27 @@ public class ShowConvActivity extends RestActivity implements View.OnClickListen
                 int i;
                 int last = idLastMessage;
               
-                for(i=0;i<messageList.length();i++) {
+                for(i=0;i<messageList.size();i++) {
                     Message msg = messageList.get(i);
-                    String nextAuteur = i == messageList.length() - 1 ?
+                    String nextAuteur = i == messageList.size() - 1 ?
                             null : messageList.get(i+1).getAuteur();
 
                     LayoutInflater inflater = getLayoutInflater();
                     View item = inflater.inflate(R.layout.message_item, null, false);
 
                     TextView content = item.findViewById(R.id.message_content);
-                    content.setText(m.getContenu());
+                    content.setText(msg.getContenu());
 
                     GradientDrawable back = new GradientDrawable();
-                    back.setStroke(6,Color.parseColor(m.getCouleur()));
+                    back.setStroke(6,Color.parseColor(msg.getCouleur()));
 
-                    if(m.getAuteur().equals(prevAuteur) && m.getAuteur().equals(nextAuteur)) {
+                    if(msg.getAuteur().equals(prevAuteur) && msg.getAuteur().equals(nextAuteur)) {
                         item.setPadding(0, 0, 0, 5);
                        back.setCornerRadii(new float[]{200,200,40,40,40,40,200,200});
-                    } else if (m.getAuteur().equals(nextAuteur)) {
+                    } else if (msg.getAuteur().equals(nextAuteur)) {
                         item.setPadding(0, 0, 0, 5);
                        back.setCornerRadii(new float[]{200,200,200,200,40,40,200,200});
-                    } else if (m.getAuteur().equals(prevAuteur))
+                    } else if (msg.getAuteur().equals(prevAuteur))
                        back.setCornerRadii(new float[]{200,200,40,40,200,200,200,200});
                     else back.setCornerRadius(200);
 
@@ -101,17 +99,17 @@ public class ShowConvActivity extends RestActivity implements View.OnClickListen
                     View pad;
                     RelativeLayout layout = item.findViewById(R.id.message_layout);
 
-                    if (m.getAuteur().equals(username)) {
+                    if (msg.getAuteur().equals(username)) {
                         ((ViewGroup) author.getParent()).removeView(author);
 
-                        back.setColor(Color.parseColor(m.getCouleur()));
+                        back.setColor(Color.parseColor(msg.getCouleur()));
                         content.setTextColor(getResources().getColor(R.color.white));
                         layout.setGravity(Gravity.END);
 
                         pad = item.findViewById(R.id.message_rPadding);
                     } else {
-                        author.setText(m.getAuteur());
-                        author.setTextColor(Color.parseColor(m.getCouleur()));
+                        author.setText(msg.getAuteur());
+                        author.setTextColor(Color.parseColor(msg.getCouleur()));
                         pad = item.findViewById(R.id.message_lPadding);
                     }
 
@@ -120,9 +118,9 @@ public class ShowConvActivity extends RestActivity implements View.OnClickListen
 
                     msgLayout.addView(item);
 
-                    if( i != messageList.length() - 1 )
-                        prevAuteur = auteur;
-                    if( i == messageList.length() - 2 )
+                    if( i != messageList.size() - 1 )
+                        prevAuteur = msg.getAuteur();
+                    if( i == messageList.size() - 2 )
                         last = msg.getId();
                   
                 }
