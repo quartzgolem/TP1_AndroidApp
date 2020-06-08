@@ -10,11 +10,16 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Collection;
 
 public class ChoixConvActivity extends RestActivity {
 
@@ -47,7 +52,7 @@ public class ChoixConvActivity extends RestActivity {
     @Override
     public void traiteReponse(JSONObject o, String action) {
         if (action.contentEquals("recupConversations")) {
-            gs.alerter(o.toString());
+            //gs.alerter(o.toString());
 
             // On transforme notre objet JSON en une liste de "Conversations"
             // On pourrait utiliser la librairie GSON pour automatiser ce processus d'interprétation
@@ -64,28 +69,19 @@ public class ChoixConvActivity extends RestActivity {
              * "conversations":[ {"id":"12","active":"1","theme":"Les cours en IAM"},
              *                   {"id":"2","active":"1","theme":"Ballon d'Or"}]}
              * */
-
-            int i;
-            JSONArray convs;
             try {
-                convs = o.getJSONArray("conversations");
-                for(i=0;i<convs.length();i++) {
-                    JSONObject nextConv = (JSONObject) convs.get(i);
 
-                    int id =Integer.parseInt(nextConv.getString("id"));
-                    String theme = nextConv.getString("theme");
-                    Boolean active = nextConv.getString("active").contentEquals("1");
-
-                    gs.alerter("Conv " + id  + " theme = " + theme + " active ?" + active);
-                    Conversation c = new Conversation(id,theme,active);
-
-                    listeConvs.addConversation(c);
-                }
+                String convsStr = o.getJSONArray("conversations").toString();
+                Gson gson = new Gson();
+                Type convsCollectionType = new TypeToken<Collection<Conversation>>(){}.getType();
+                ArrayList<Conversation> conversations = gson.fromJson(convsStr, convsCollectionType);
+                listeConvs.setList(conversations);
+                
             } catch (JSONException e) {
                 e.printStackTrace();
             }
 
-            gs.alerter(listeConvs.toString());
+            //gs.alerter(listeConvs.toString());
 
             // On peut maintenant appuyer sur le bouton
             remplirSpinner();
@@ -151,8 +147,10 @@ public class ChoixConvActivity extends RestActivity {
             TextView label = item.findViewById(R.id.spinner_theme);
             label.setText(nextC.getTheme());
 
-            ImageView icon = item.findViewById(R.id.spinner_icon);
-            if (nextC.getActive()) {
+
+            ImageView icon = (ImageView) item.findViewById(R.id.spinner_icon);
+
+            if (nextC.isActive()) {
                 icon.setImageResource(R.drawable.icon);
             } else {
                 icon.setImageResource(R.drawable.icongray);

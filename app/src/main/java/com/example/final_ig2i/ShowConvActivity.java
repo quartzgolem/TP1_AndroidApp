@@ -18,6 +18,14 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+
 public class ShowConvActivity extends RestActivity implements View.OnClickListener {
 
     private int idConv;
@@ -56,33 +64,35 @@ public class ShowConvActivity extends RestActivity implements View.OnClickListen
                     msgLayout.removeViewAt(msgLayout.getChildCount()-1);
 
                 // parcours des messages
-                JSONArray messages = o.getJSONArray("messages");
+                String messagesStr = o.getJSONArray("messages").toString();
+                Gson gson = new Gson();
+                Type messageCollectionType = new TypeToken<Collection<Message>>(){}.getType();
+                ArrayList<Message> messageList = gson.fromJson(messagesStr, messageCollectionType);
+              
                 int i;
                 int last = idLastMessage;
-                for(i=0;i<messages.length();i++) {
-                    JSONObject msg = (JSONObject) messages.get(i);
-                    String contenu =  msg.getString("contenu");
-                    String auteur =  msg.getString("auteur");
-                    String couleur =  msg.getString("couleur");
-                    String nextAuteur = i == messages.length() - 1 ?
-                            null : ((JSONObject) messages.get(i+1)).getString("auteur") ;
+              
+                for(i=0;i<messageList.length();i++) {
+                    Message msg = messageList.get(i);
+                    String nextAuteur = i == messageList.length() - 1 ?
+                            null : messageList.get(i+1).getAuteur();
 
                     LayoutInflater inflater = getLayoutInflater();
                     View item = inflater.inflate(R.layout.message_item, null, false);
 
                     TextView content = item.findViewById(R.id.message_content);
-                    content.setText(contenu);
+                    content.setText(m.getContenu());
 
                     GradientDrawable back = new GradientDrawable();
-                    back.setStroke(6,Color.parseColor(couleur));
+                    back.setStroke(6,Color.parseColor(m.getCouleur()));
 
-                    if(auteur.equals(prevAuteur) && auteur.equals(nextAuteur)) {
+                    if(m.getAuteur().equals(prevAuteur) && m.getAuteur().equals(nextAuteur)) {
                         item.setPadding(0, 0, 0, 5);
                        back.setCornerRadii(new float[]{200,200,40,40,40,40,200,200});
-                    } else if (auteur.equals(nextAuteur)) {
+                    } else if (m.getAuteur().equals(nextAuteur)) {
                         item.setPadding(0, 0, 0, 5);
                        back.setCornerRadii(new float[]{200,200,200,200,40,40,200,200});
-                    } else if (auteur.equals(prevAuteur))
+                    } else if (m.getAuteur().equals(prevAuteur))
                        back.setCornerRadii(new float[]{200,200,40,40,200,200,200,200});
                     else back.setCornerRadius(200);
 
@@ -91,17 +101,17 @@ public class ShowConvActivity extends RestActivity implements View.OnClickListen
                     View pad;
                     RelativeLayout layout = item.findViewById(R.id.message_layout);
 
-                    if (auteur.equals(username)) {
+                    if (m.getAuteur().equals(username)) {
                         ((ViewGroup) author.getParent()).removeView(author);
 
-                        back.setColor(Color.parseColor(couleur));
+                        back.setColor(Color.parseColor(m.getCouleur()));
                         content.setTextColor(getResources().getColor(R.color.white));
                         layout.setGravity(Gravity.END);
 
                         pad = item.findViewById(R.id.message_rPadding);
                     } else {
-                        author.setText(auteur);
-                        author.setTextColor(Color.parseColor(couleur));
+                        author.setText(m.getAuteur());
+                        author.setTextColor(Color.parseColor(m.getCouleur()));
                         pad = item.findViewById(R.id.message_lPadding);
                     }
 
@@ -110,10 +120,11 @@ public class ShowConvActivity extends RestActivity implements View.OnClickListen
 
                     msgLayout.addView(item);
 
-                    if( i != messages.length() - 1 )
+                    if( i != messageList.length() - 1 )
                         prevAuteur = auteur;
-                    if( i == messages.length() - 2 )
-                        last = msg.getInt("id");
+                    if( i == messageList.length() - 2 )
+                        last = msg.getId();
+                  
                 }
 
                 if (i > 1)

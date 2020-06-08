@@ -14,8 +14,12 @@ public class ListeConversations {
         return list;
     }
 
-    public void addConversation(Conversation c) {
-        list.add(c);
+//    public void addConversation(Conversation c) {
+//        list.add(c);
+//    }
+
+    public void setList(ArrayList<Conversation> list) {
+        this.list = list;
     }
 
     @Override

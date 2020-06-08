@@ -12,12 +12,12 @@ public class Conversation {
 
     private int id;
     private String theme;
-    private Boolean active;
+    private Integer active;
 
     // Raccourci : Alt+Ins pour générer getters, setters et constructeurs
 
 
-    public Conversation(int id, String theme, Boolean active) {
+    public Conversation(int id, String theme, Integer active) {
         this.id = id;
         this.theme = theme;
         this.active = active;
@@ -46,9 +46,7 @@ public class Conversation {
         return theme;
     }
 
-    public Boolean getActive() {
-        return active;
-    }
+    public Boolean isActive(){ return active != 0; }
 
     public void setId(int id) {
         this.id = id;
@@ -58,7 +56,7 @@ public class Conversation {
         this.theme = theme;
     }
 
-    public void setActive(Boolean active) {
+    public void setActive(Integer active) {
         this.active = active;
     }
 }
